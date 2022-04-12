@@ -4,8 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-
-//import 'package:paysae_provider/app/models/user_model.dart';
+import 'package:food_lab/app/models/user_model.dart';
 import 'package:food_lab/app/stores/auth_store.dart';
 
 part 'registrar_controller.g.dart';
@@ -102,35 +101,22 @@ abstract class _RegistrarControllerBase with Store {
     if (valido) {
       String _result = '', _resultGravacao = '';
 
-      /*    UserModel model = UserModel(
+      UserModel model = UserModel(
         email: this.email,
-        nascimento: this.dataNasc,
         nome: this.nome,
-        password: this.senha,
-        instagram: 'Vazio',
-        telefone: 'Vazio',
-        status: '-1',
-        splitActive: false,
-        splitID: 'vazio',
-        splitNomeEstab: 'vazio',
-        splitPreco: 0,
-        statusSplit: 0,
-        raio: 1,
-      ); */
+      );
 
       if (isRegisterValid) {
-        _result =
-            "ok"; //await auth!.fazerCadastro(this.nome, dataNasc, email, senha);
+        _result = await auth!.fazerCadastro(this.nome, email, senha);
         if (_result == 'ok') {
-          //_resultGravacao = await auth!.fazerGravacao(model);
+          _resultGravacao = await auth!.fazerGravacao(model);
         } else {
           mensagem = _result;
           erroCadastro = true;
         }
       }
       if (_result == 'ok' && _resultGravacao == 'ok') {
-        // await auth.getFirebaseuser();
-        //await auth!.getUser();
+        await auth!.getUser();
         Get.toNamed('/base');
         erroCadastro = false;
       } else {

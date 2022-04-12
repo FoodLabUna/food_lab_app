@@ -35,15 +35,13 @@ class PopupPerfil extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  //authStore!.user?.nome ?? '',
-                  "Daniel Teófilo",
+                  authStore!.user?.nome ?? '',
                   style: TextStyle(fontSize: 18),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
                 Text(
-                  //authStore!.user?.email ?? "userManager.user.email",
-                  "feitordaniel97@gmail.com",
+                  authStore!.user?.email ?? "userManager.user.email",
                   style: TextStyle(fontSize: 11),
                 ),
               ],
@@ -94,7 +92,7 @@ class PopupPerfil extends StatelessWidget {
                   PopupPerfilItem(
                     onTap: () async {
                       Get.toNamed('/auth');
-                      //await authStore!.fazerLogoff();
+                      await authStore!.fazerLogoff();
                     },
                     title: 'Logoff',
                     subtitle: 'Até a próxima',

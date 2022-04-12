@@ -44,12 +44,12 @@ abstract class _LoginControllerBase with Store {
     toggleLoading();
     if (isLoginValid) {
       print("EMAIL VALIDO");
-      _result = "ok"; //await auth!.fazerLogin(email: email, senha: senha);
+      _result = await auth!.fazerLogin(email: email, senha: senha);
     }
     print('RESULTADO: $_result');
     if (_result == 'ok') {
       erro = false;
-      //await auth!.init();
+      await auth!.init();
       Get.toNamed('/base');
     } else {
       mensagem = _result;

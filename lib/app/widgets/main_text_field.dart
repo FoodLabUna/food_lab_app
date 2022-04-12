@@ -34,7 +34,7 @@ class MainTextField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
-            color: Colors.blueGrey,
+            color: Colors.grey,
             width: 2,
           ),
         ),

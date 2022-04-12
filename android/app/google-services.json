@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "603073518328",
+    "project_id": "food-lab-498fd",
+    "storage_bucket": "food-lab-498fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603073518328:android:c8115288f57da8afe4790d",
+        "android_client_info": {
+          "package_name": "com.example.food_lab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603073518328-95k9u4s51rphp5d6oth4hm9u08t26vd6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR_DQObRvst2qhjMQT6FQWJ76OEYh2eww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603073518328-95k9u4s51rphp5d6oth4hm9u08t26vd6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
