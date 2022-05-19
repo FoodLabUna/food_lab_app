@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 part 'base_screen_controller.g.dart';
@@ -12,10 +14,16 @@ abstract class _BaseScreenControllerBase with Store {
   int selectedIndex = 0;
 
   @observable
+  File? imageFile;
+
+  @observable
   String? label;
 
   @action
   setLabel(String? value) => label = value;
+
+  @action
+  setImageFile(File value) => imageFile = value;
 
   String? get tituloHome {
     String? _result = 'Home';
@@ -44,5 +52,29 @@ abstract class _BaseScreenControllerBase with Store {
       duration: Duration(milliseconds: 200),
       curve: Curves.ease,
     );
+  }
+
+  @action
+  Future<void> getFromGallery() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    }
+  }
+
+  @action
+  Future<void> getFromCamera() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    }
   }
 }

@@ -25,6 +25,21 @@ mixin _$BaseScreenController on _BaseScreenControllerBase, Store {
     });
   }
 
+  final _$imageFileAtom = Atom(name: '_BaseScreenControllerBase.imageFile');
+
+  @override
+  File? get imageFile {
+    _$imageFileAtom.reportRead();
+    return super.imageFile;
+  }
+
+  @override
+  set imageFile(File? value) {
+    _$imageFileAtom.reportWrite(value, super.imageFile, () {
+      super.imageFile = value;
+    });
+  }
+
   final _$labelAtom = Atom(name: '_BaseScreenControllerBase.label');
 
   @override
@@ -40,6 +55,22 @@ mixin _$BaseScreenController on _BaseScreenControllerBase, Store {
     });
   }
 
+  final _$getFromGalleryAsyncAction =
+      AsyncAction('_BaseScreenControllerBase.getFromGallery');
+
+  @override
+  Future<void> getFromGallery() {
+    return _$getFromGalleryAsyncAction.run(() => super.getFromGallery());
+  }
+
+  final _$getFromCameraAsyncAction =
+      AsyncAction('_BaseScreenControllerBase.getFromCamera');
+
+  @override
+  Future<void> getFromCamera() {
+    return _$getFromCameraAsyncAction.run(() => super.getFromCamera());
+  }
+
   final _$_BaseScreenControllerBaseActionController =
       ActionController(name: '_BaseScreenControllerBase');
 
@@ -49,6 +80,17 @@ mixin _$BaseScreenController on _BaseScreenControllerBase, Store {
         .startAction(name: '_BaseScreenControllerBase.setLabel');
     try {
       return super.setLabel(value);
+    } finally {
+      _$_BaseScreenControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setImageFile(File value) {
+    final _$actionInfo = _$_BaseScreenControllerBaseActionController
+        .startAction(name: '_BaseScreenControllerBase.setImageFile');
+    try {
+      return super.setImageFile(value);
     } finally {
       _$_BaseScreenControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -80,6 +122,7 @@ mixin _$BaseScreenController on _BaseScreenControllerBase, Store {
   String toString() {
     return '''
 selectedIndex: ${selectedIndex},
+imageFile: ${imageFile},
 label: ${label}
     ''';
   }
