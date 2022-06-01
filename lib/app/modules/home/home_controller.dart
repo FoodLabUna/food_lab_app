@@ -1,3 +1,4 @@
+import 'package:food_lab/app/models/historico_pesquisa_model.dart';
 import 'package:food_lab/app/models/validate_fish_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -37,7 +38,7 @@ abstract class _HomeControllerBase with Store {
     });
 
     var response =
-        await Dio().post('https://634c-177-209-66-179.ngrok.io/validate-fish',
+        await Dio().post('https://food-lab-ia-api.herokuapp.com/validate-fish',
             options: Options(
               contentType: 'multipart/form-data',
             ),
@@ -48,6 +49,10 @@ abstract class _HomeControllerBase with Store {
     var res = ValidateFish.fromJson(map);
     type = res.type.toString();
     acc = res.accuracy.toString();
+    HistoricoPesquisaModel history = new HistoricoPesquisaModel();
+    history.acuracidade = int.parse(acc);
+    history.tipoPeixe = type;
+    await authStore?.savePredict(history, type);
     loading = false;
     showResult = true;
     return response;

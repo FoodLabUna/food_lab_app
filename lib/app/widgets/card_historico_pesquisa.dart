@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:food_lab/app/models/historico_pesquisa_model.dart';
 
 const double _leftPadding = 30;
@@ -30,17 +31,21 @@ class _HistoricoPesquisaCardState extends State<HistoricoPesquisaCard> {
 
   @override
   Widget build(BuildContext context) {
-    Color? colorForStatus(double acuracidade) {
-      if (acuracidade >= 50.0) {
+    Color? colorForStatus(num acuracidade) {
+      if (acuracidade > 80.0) {
         return Colors.green[800];
+      } else if (acuracidade >= 50.0 && acuracidade <= 80.0) {
+        return Colors.orange[300];
       } else {
         return Colors.red;
       }
     }
 
-    String textStatus(double acuracidade) {
-      if (acuracidade >= 50.0) {
+    String textStatus(num acuracidade) {
+      if (acuracidade > 80.0) {
         return "PRECISÃO BOA";
+      } else if (acuracidade >= 50.0 && acuracidade <= 80.0) {
+        return "PRECISÃO MÉDIA";
       } else {
         return "PRECISÃO RUIM";
       }
@@ -79,7 +84,7 @@ class _HistoricoPesquisaCardState extends State<HistoricoPesquisaCard> {
                 child: RotatedBox(
                     quarterTurns: 1,
                     child: Padding(
-                      padding: EdgeInsets.all(1.0),
+                      padding: EdgeInsets.all(0.1),
                       child: Text(
                         textStatus(
                           widget.pedido.acuracidade!,
@@ -145,7 +150,10 @@ class _Cabecalho extends StatelessWidget {
   _Cabecalho(this.pedido);
 
   String getData() {
-    return pedido.data!;
+    DateTime now = DateTime.fromMicrosecondsSinceEpoch(
+        pedido.data!.microsecondsSinceEpoch);
+    String formattedDate = DateFormat('dd/MM/yyyy–kk:mm:ss').format(now);
+    return formattedDate;
   }
 
   @override
@@ -174,15 +182,17 @@ class _Cabecalho extends StatelessWidget {
         ),
         Container(
           alignment: Alignment.topCenter,
-          width: 50,
-          height: 70,
+          width: 80,
+          height: 80,
           child: Container(
             height: double.infinity,
             alignment: Alignment.center, // This is needed
-            child: Image.asset(
-              pedido.image!,
-              fit: BoxFit.cover,
-              width: 300,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25.0),
+              child: Image.asset(
+                'assets/images/' + pedido.image! + '.jpg',
+                width: 250.0,
+              ),
             ),
           ),
         ),

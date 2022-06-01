@@ -1,3 +1,4 @@
+import 'package:food_lab/app/models/historico_pesquisa_model.dart';
 import 'package:mobx/mobx.dart';
 import 'package:get/get.dart';
 import 'package:food_lab/app/models/user_model.dart';
@@ -10,6 +11,11 @@ class AuthStore = _AuthStoreBase with _$AuthStore;
 
 abstract class _AuthStoreBase with Store {
   final FirebaseAuth authFirebase = FirebaseAuth.instance;
+  @observable
+  ObservableList<HistoricoPesquisaModel> history =
+      <HistoricoPesquisaModel>[].asObservable();
+
+  Stream<QuerySnapshot>? listenHistory;
 
   init() async {
     if (FirebaseAuth.instance.currentUser != null) {
@@ -49,6 +55,7 @@ abstract class _AuthStoreBase with Store {
         .listen((event) async {
       user = UserModel.fromDocument(event);
     });
+    getHistory(user?.id);
   }
 
   @action
@@ -149,6 +156,49 @@ abstract class _AuthStoreBase with Store {
     } catch (e) {
       print('ERRO: $e');
     }
+  }
+
+  @action
+  savePredict(HistoricoPesquisaModel history, String peixe) async {
+    history.user_id = user?.id;
+    history.user_name = user?.nome;
+    if (peixe != "TILÁPIA") {
+      history.image = "merluza";
+      history.ranking = 2;
+    } else {
+      history.image = "tilapia";
+      history.ranking = 1;
+    }
+    try {
+      await FirebaseFirestore.instance
+          .collection("history")
+          .add(history.toJson());
+      listenUser();
+    } catch (e) {
+      print('ERRO: $e');
+    }
+  }
+
+  @action
+  getHistory(String? uid) async {
+    listenHistory = FirebaseFirestore.instance
+        .collection('history')
+        .where(
+          'user_id',
+          isEqualTo: uid,
+        )
+        .snapshots();
+
+    listenHistory!.listen((event) {
+      this.history.clear();
+      event.docs.forEach((element) {
+        this.history.add(HistoricoPesquisaModel.fromJson(
+            element.data() as Map<String, dynamic>));
+      });
+      List<HistoricoPesquisaModel> aux = history.toList();
+      aux.sort((a, b) => b.data!.compareTo(a.data!));
+      history = aux.toList().asObservable();
+    });
   }
 
   fazerLogoff() async {

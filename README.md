@@ -1,6 +1,11 @@
 # food_lab
 
-app para analizar fraude de pescado
+App para analizar fraude de pescado
+
+Flutter version : 2.10.1
+
+- flutter clean
+- flutter pub get
 
 ## Getting Started
 

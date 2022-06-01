@@ -13,31 +13,16 @@ mixin _$HistoricoPesquisaController on _HistoricoPesquisaControllerBase, Store {
       Atom(name: '_HistoricoPesquisaControllerBase.histPesq');
 
   @override
-  List<HistoricoPesquisaModel> get histPesq {
+  ObservableList<HistoricoPesquisaModel> get histPesq {
     _$histPesqAtom.reportRead();
     return super.histPesq;
   }
 
   @override
-  set histPesq(List<HistoricoPesquisaModel> value) {
+  set histPesq(ObservableList<HistoricoPesquisaModel> value) {
     _$histPesqAtom.reportWrite(value, super.histPesq, () {
       super.histPesq = value;
     });
-  }
-
-  final _$_HistoricoPesquisaControllerBaseActionController =
-      ActionController(name: '_HistoricoPesquisaControllerBase');
-
-  @override
-  dynamic populateList(num cont) {
-    final _$actionInfo = _$_HistoricoPesquisaControllerBaseActionController
-        .startAction(name: '_HistoricoPesquisaControllerBase.populateList');
-    try {
-      return super.populateList(cont);
-    } finally {
-      _$_HistoricoPesquisaControllerBaseActionController
-          .endAction(_$actionInfo);
-    }
   }
 
   @override

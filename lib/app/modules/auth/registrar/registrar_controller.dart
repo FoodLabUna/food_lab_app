@@ -71,6 +71,8 @@ abstract class _RegistrarControllerBase with Store {
     if (EmailValidator.validate(email)) {
       valido = true;
     } else {
+      print(email);
+      print(EmailValidator.validate(email));
       mensagem = 'Seu email é inválido';
       setErroCadastro(true);
       return false;

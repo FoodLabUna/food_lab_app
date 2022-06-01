@@ -17,6 +17,21 @@ mixin _$AuthStore on _AuthStoreBase, Store {
               name: '_AuthStoreBase.userLogged'))
           .value;
 
+  final _$historyAtom = Atom(name: '_AuthStoreBase.history');
+
+  @override
+  ObservableList<HistoricoPesquisaModel> get history {
+    _$historyAtom.reportRead();
+    return super.history;
+  }
+
+  @override
+  set history(ObservableList<HistoricoPesquisaModel> value) {
+    _$historyAtom.reportWrite(value, super.history, () {
+      super.history = value;
+    });
+  }
+
   final _$userAtom = Atom(name: '_AuthStoreBase.user');
 
   @override
@@ -79,6 +94,21 @@ mixin _$AuthStore on _AuthStoreBase, Store {
     return _$atualizarUserAsyncAction.run(() => super.atualizarUser(model));
   }
 
+  final _$savePredictAsyncAction = AsyncAction('_AuthStoreBase.savePredict');
+
+  @override
+  Future savePredict(HistoricoPesquisaModel history, String peixe) {
+    return _$savePredictAsyncAction
+        .run(() => super.savePredict(history, peixe));
+  }
+
+  final _$getHistoryAsyncAction = AsyncAction('_AuthStoreBase.getHistory');
+
+  @override
+  Future getHistory(String? uid) {
+    return _$getHistoryAsyncAction.run(() => super.getHistory(uid));
+  }
+
   final _$_AuthStoreBaseActionController =
       ActionController(name: '_AuthStoreBase');
 
@@ -96,6 +126,7 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   @override
   String toString() {
     return '''
+history: ${history},
 user: ${user},
 userLogged: ${userLogged}
     ''';
